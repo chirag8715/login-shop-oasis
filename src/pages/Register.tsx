@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -18,8 +18,15 @@ const Register: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   
-  const { register } = useAuth();
+  const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to shop if already authenticated
+    if (isAuthenticated) {
+      navigate('/shop');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,8 +54,8 @@ const Register: React.FC = () => {
       if (success) {
         navigate('/shop');
       }
-    } catch (err) {
-      setError('An unexpected error occurred');
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -146,7 +153,7 @@ const Register: React.FC = () => {
           <CardFooter className="flex justify-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <Link to="/login" className="text-ecommerce-blue hover:underline font-medium">
+              <Link to="/login" className="text-blue-600 hover:underline font-medium">
                 Login
               </Link>
             </p>

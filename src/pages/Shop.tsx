@@ -1,17 +1,44 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../contexts/CartContext';
-import { products, categories } from '../utils/data';
+import { categories } from '../utils/data';
 import ProductCard from '../components/ProductCard';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { Product } from '../contexts/CartContext';
 
 const Shop: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('products')
+          .select('*');
+        
+        if (error) {
+          throw error;
+        }
+        
+        setProducts(data || []);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchProducts();
+  }, []);
 
   // Filter products based on category and search query
   const filteredProducts = products.filter(product => {
@@ -43,6 +70,14 @@ const Shop: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap gap-2 mb-6">
+            <Button
+              key="all"
+              variant={selectedCategory === 'all' ? "default" : "outline"}
+              onClick={() => setSelectedCategory('all')}
+              className="mb-2"
+            >
+              All Products
+            </Button>
             {categories.map(category => (
               <Button
                 key={category.id}
@@ -55,12 +90,16 @@ const Shop: React.FC = () => {
             ))}
           </div>
 
-          {filteredProducts.length === 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-ecommerce-blue"></div>
+            </div>
+          ) : filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-lg text-gray-600">No products found. Try a different search or category.</p>
             </div>
           ) : (
-            <div className="product-grid">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
