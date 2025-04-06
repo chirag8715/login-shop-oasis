@@ -17,6 +17,7 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [registered, setRegistered] = useState(false);
   
   const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -50,17 +51,45 @@ const Register: React.FC = () => {
     setError('');
     
     try {
+      console.log('Submitting registration for:', email);
       const success = await register(name, email, password);
+      
       if (success) {
-        navigate('/shop');
+        setRegistered(true);
+        // Don't automatically navigate - let the user see the success message
       }
     } catch (err: any) {
+      console.error('Registration error:', err);
       setError(err.message || 'An unexpected error occurred');
-      console.error(err);
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (registered) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+          <Card className="w-full max-w-md">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl font-bold text-center text-green-600">Registration Successful!</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center">
+              <p className="mb-4">Your account has been created successfully.</p>
+              <Button 
+                onClick={() => navigate('/login')}
+                className="w-full"
+              >
+                Go to Login
+              </Button>
+            </CardContent>
+          </Card>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -111,6 +140,7 @@ const Register: React.FC = () => {
                   disabled={isLoading}
                   required
                 />
+                <p className="text-xs text-gray-500">Password must be at least 6 characters</p>
               </div>
               
               <div className="space-y-2">

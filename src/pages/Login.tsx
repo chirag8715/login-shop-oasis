@@ -34,17 +34,26 @@ const Login: React.FC = () => {
       return;
     }
 
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
     setIsLoading(true);
     setError('');
     
     try {
+      console.log('Submitting login for:', email);
       const success = await login(email, password);
       if (success) {
+        console.log('Login successful, redirecting to /shop');
         navigate('/shop');
+      } else {
+        setError('Login failed. Please check your credentials.');
       }
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(err.message || 'An unexpected error occurred');
-      console.error(err);
     } finally {
       setIsLoading(false);
     }
