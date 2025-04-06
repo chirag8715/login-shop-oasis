@@ -6,15 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogIn } from 'lucide-react';
+import { LogIn, AlertCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { toast } from 'sonner';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showEmailConfirmationHelp, setShowEmailConfirmationHelp] = useState(false);
   
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -41,19 +43,30 @@ const Login: React.FC = () => {
 
     setIsLoading(true);
     setError('');
+    setShowEmailConfirmationHelp(false);
     
     try {
       console.log('Submitting login for:', email);
       const success = await login(email, password);
       if (success) {
         console.log('Login successful, redirecting to /shop');
+        toast.success("Login successful!");
         navigate('/shop');
       } else {
         setError('Login failed. Please check your credentials.');
       }
     } catch (err: any) {
       console.error('Login error:', err);
-      setError(err.message || 'An unexpected error occurred');
+      
+      // Handle specific Supabase error codes
+      if (err.code === 'email_not_confirmed') {
+        setError('Your email is not confirmed.');
+        setShowEmailConfirmationHelp(true);
+      } else if (err.code === 'invalid_credentials') {
+        setError('Invalid email or password. Please try again.');
+      } else {
+        setError(err.message || 'An unexpected error occurred');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -99,8 +112,17 @@ const Login: React.FC = () => {
               </div>
               
               {error && (
-                <div className="text-sm text-red-500">
-                  {error}
+                <div className="text-sm text-red-500 bg-red-50 p-3 rounded border border-red-200 flex items-start">
+                  <AlertCircle className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
+                  <div>
+                    {error}
+                    {showEmailConfirmationHelp && (
+                      <div className="mt-2">
+                        <p>Email confirmation is required before logging in. Please check your inbox and follow the confirmation link.</p>
+                        <p className="mt-1">If you are using this for development, you can disable email confirmation in the Supabase Dashboard under Authentication &gt; Email Templates &gt; Disable email confirmation.</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
               
@@ -123,13 +145,16 @@ const Login: React.FC = () => {
               </Button>
             </form>
           </CardContent>
-          <CardFooter className="flex justify-center">
-            <p className="text-sm text-gray-600">
+          <CardFooter className="flex flex-col space-y-4">
+            <p className="text-sm text-gray-600 w-full text-center">
               Don't have an account?{' '}
               <Link to="/register" className="text-blue-600 hover:underline font-medium">
                 Register
               </Link>
             </p>
+            <div className="text-xs text-gray-500 w-full text-center px-4">
+              <p>For development: If you cannot log in due to email confirmation errors, you need to disable email confirmation in the Supabase Dashboard.</p>
+            </div>
           </CardFooter>
         </Card>
       </main>

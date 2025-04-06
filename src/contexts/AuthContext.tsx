@@ -126,11 +126,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) {
         console.error('Registration error:', error);
         toast.error(error.message);
-        return false;
+        throw error; // Throw error for the component to catch
       }
       
       if (data.user) {
-        toast.success("Registration successful! You can now log in.");
+        toast.success("Registration successful! Please check your email to confirm your account.");
         return true;
       } else {
         toast.error("Something went wrong during registration.");
@@ -139,7 +139,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error: any) {
       console.error('Registration exception:', error);
       toast.error(error.message || "An error occurred during registration");
-      return false;
+      throw error; // Rethrow for the component to handle
     }
   };
 
@@ -153,8 +153,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (error) {
         console.error('Login error:', error);
-        toast.error(error.message);
-        return false;
+        // Don't toast here, let the component handle it
+        throw error; // Throw the error for the component to catch
       }
       
       if (data.user) {
@@ -166,8 +166,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (error: any) {
       console.error('Login exception:', error);
-      toast.error(error.message || "An error occurred during login");
-      return false;
+      // Let the component handle the toast
+      throw error; // Rethrow for better component-level handling
     }
   };
 
