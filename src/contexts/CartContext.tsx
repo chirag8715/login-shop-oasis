@@ -18,6 +18,21 @@ export interface CartItem {
   quantity: number;
 }
 
+// Define shapes of the cart items from the database
+interface CartItemFromDB {
+  id: string;
+  quantity: number;
+  product_id: string;
+  products: {
+    id: string;
+    name: string;
+    price: number;
+    image: string;
+    description: string;
+    category: string;
+  }
+}
+
 interface CartContextType {
   items: CartItem[];
   addItem: (product: Product, quantity?: number) => void;
@@ -79,7 +94,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         if (cartItems) {
-          const formattedItems = cartItems.map(item => ({
+          const formattedItems = cartItems.map((item: CartItemFromDB) => ({
             product: {
               id: item.product_id,
               name: item.products.name,

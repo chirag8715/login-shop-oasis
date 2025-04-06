@@ -11,6 +11,17 @@ import { Search } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Product } from '../contexts/CartContext';
 
+// Define the product type from the database
+interface ProductFromDB {
+  id: string;
+  name: string;
+  price: number;
+  image: string | null;
+  description: string | null;
+  category: string | null;
+  created_at: string;
+}
+
 const Shop: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,7 +40,17 @@ const Shop: React.FC = () => {
           throw error;
         }
         
-        setProducts(data || []);
+        // Transform the data to ensure all fields are properly typed
+        const formattedProducts: Product[] = (data as ProductFromDB[]).map(product => ({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image || 'https://placehold.co/400x300?text=No+Image',
+          description: product.description || 'No description available',
+          category: product.category || 'Uncategorized'
+        }));
+        
+        setProducts(formattedProducts);
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {

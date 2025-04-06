@@ -11,6 +11,8 @@ const Navbar: React.FC = () => {
   const { totalItems } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const displayName = currentUser?.profile?.full_name || currentUser?.email || 'User';
+
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +41,7 @@ const Navbar: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-sm font-medium text-gray-700">
-                    {currentUser.name}
+                    {displayName}
                   </span>
                   <Button variant="ghost" size="icon" onClick={logout}>
                     <LogOut className="h-5 w-5" />
@@ -94,7 +96,7 @@ const Navbar: React.FC = () => {
                 </Link>
                 <div className="flex items-center justify-between px-3 py-2">
                   <span className="text-base font-medium text-gray-700">
-                    {currentUser.name}
+                    {displayName}
                   </span>
                   <Button variant="ghost" size="sm" onClick={() => {
                     logout();
