@@ -1,73 +1,58 @@
-# Welcome to your Lovable project
+# 🛍️ Login-Shop-Oasis
 
-## Project info
+This is a simple login and shopping cart app built with Flutter. The project was created as a part of learning how authentication and basic e-commerce functionality works in a mobile app.
 
-**URL**: https://lovable.dev/projects/a3ece518-32a7-4f52-b5a0-01ba9c2db94d
+## ✨ Features
 
-## How can I edit this code?
+- ✅ Login screen with basic validation
+- 🛒 Product list with option to add items to the cart
+- 🧺 Cart screen showing added products
+- 🔐 Simple auth flow (no backend – just a UI demo)
+- 💡 Clean and easy-to-understand UI
 
-There are several ways of editing your application.
+## 🚀 Getting Started
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a3ece518-32a7-4f52-b5a0-01ba9c2db94d) and start prompting.
+- Flutter SDK installed
+- Android Studio / VS Code
+- An emulator or connected device
 
-Changes made via Lovable will be committed automatically to this repo.
+### How to Run
 
-**Use your preferred IDE**
+1. Clone the repo:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+   bash
+   git clone https://github.com/chirag8715/login-shop-oasis.git
+   
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. Open the folder in VS Code or Android Studio.
 
-Follow these steps:
+3. Get the packages:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+   bash
+   flutter pub get
+   
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. Run the app:
 
-# Step 3: Install the necessary dependencies.
-npm i
+   bash
+   flutter run
+   
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## 📁 Project Structure
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+lib/
+│
+├── main.dart           # Entry point
+├── login_screen.dart   # Login UI
+├── home_screen.dart    # Product list and shop
+├── cart_screen.dart    # Cart UI
+└── models/             # Data models (if added)
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📌 Notes
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a3ece518-32a7-4f52-b5a0-01ba9c2db94d) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- This is a UI-focused app, so no real authentication or database is used.
+- You can improve this by integrating Firebase Auth or a custom backend.
