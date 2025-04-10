@@ -30,13 +30,12 @@ This is a simple login and shopping cart app built with Flutter. The project was
 3. Get the packages:
 
    bash
-   flutter pub get
+   
    
 
 4. Run the app:
 
    bash
-   flutter run
    
 
 ## 📁 Project Structure
