@@ -14,8 +14,7 @@ This is a simple login and shopping cart app built with Flutter. The project was
 
 ### Prerequisites
 
-- Flutter SDK installed
-- Android Studio / VS Code
+- VS Code
 - An emulator or connected device
 
 ### How to Run
