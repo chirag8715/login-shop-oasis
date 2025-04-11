@@ -1,56 +1,43 @@
-# 🛍️ Login-Shop-Oasis
+# 🛒 My Shopping Cart - MyCourses App
 
-This is a simple login and shopping cart app built with Flutter. The project was created as a part of learning how authentication and basic e-commerce functionality works in a mobile app.
+A full-stack **MyCourses shopping cart application** built with **Node.js, HTML, CSS**, and deployed on **IBM Cloud**. This application allows users to **log in, view available courses, and perform CRUD operations** (Create, Read, Update, Delete) on their personalized course list using RESTful APIs.
 
-## ✨ Features
+> ✨ Bonus: Supports **Google Authentication** for seamless login.
 
-- ✅ Login screen with basic validation
-- 🛒 Product list with option to add items to the cart
-- 🧺 Cart screen showing added products
-- 🔐 Simple auth flow (no backend – just a UI demo)
-- 💡 Clean and easy-to-understand UI
+---
 
-## 🚀 Getting Started
+## 🚀 Features
 
-### Prerequisites
+- 🔐 User Login with Username/Password  
+- 🌐 Google Authentication (Optional/Bonus)  
+- 📚 View All Available Courses  
+- ➕ Add a New Course  
+- 📝 Edit Existing Course Details  
+- ❌ Delete a Course  
+- 📋 View Personalized Course List  
+- ☁️ Deployed on IBM Cloud  
+- ✅ API Tested with Postman  
 
-- VS Code
-- An emulator or connected device
+---
 
-### How to Run
+## 🧰 Tech Stack
 
-1. Clone the repo:
+| Tech          | Description                        |
+|---------------|------------------------------------|
+| Node.js       | Backend runtime                    |
+| HTML/CSS/JS   | Frontend technologies              |
+| Supabase      | Authentication & Backend Services  |
+| IBM Cloud     | Deployment platform                |
+| Vite + React  | Frontend Build Tool + Framework    |
+| Tailwind CSS  | Modern utility-first styling       |
+                        
 
-   bash
-   git clone https://github.com/chirag8715/login-shop-oasis.git
-   
+---
 
-2. Open the folder in VS Code or Android Studio.
+## ☁️ IBM Cloud Deployment
 
-3. Get the packages:
-
-   bash
-   
-   
-
-4. Run the app:
-
-   bash
-   
-
-## 📁 Project Structure
-
-
-lib/
-│
-├── main.dart           # Entry point
-├── login_screen.dart   # Login UI
-├── home_screen.dart    # Product list and shop
-├── cart_screen.dart    # Cart UI
-└── models/             # Data models (if added)
-
-
-## 📌 Notes
-
-- This is a UI-focused app, so no real authentication or database is used.
-- You can improve this by integrating Firebase Auth or a custom backend.
+1. Log in to your IBM Cloud account.
+2. Clone this repository and navigate into it:
+   ```bash
+   git clone https://github.com/<your-username>/login-shop-oasis-main.git
+   cd login-shop-oasis-main
